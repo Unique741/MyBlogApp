@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Blog Home{% endblock %}
+{% block content %}
+    <h1>Blog Posts</h1>
+    {% for post in posts %}
+        <div class="card mb-4 shadow-sm">
+            {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 200px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h2 class="card-title"><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+                <p class="card-text">{{ post.content|safe|truncatewords_html:30 }}</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        By {{ post.author }} on {{ post.created_at|date:"F d, Y" }} |
+                        Categories: {% for category in post.categories.all %}{{ category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    </small>
+                </p>
+                <a href="{% url 'like_post' post.pk %}" class="btn btn-sm btn-outline-primary">
+                    {% if user in post.likes.all %}Unlike{% else %}Like{% endif %} ({{ post.likes.count }})
+                </a>
+                {% if user == post.author %}
+                    <a href="{% url 'post_edit' post.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'post_delete' post.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>No posts available.</p>
+    {% endfor %}
+    {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; Previous</a></li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,20 @@
+# Python/Django specific
+*.pyc 
+__pycache__/
+*.Pyo  
+*.pyd
+*.db  
+*.sqlite3  
+venv/ 
+*.log 
+
+# media and static files 
+media/ 
+
+# Environmen variables
+.env 
+
+# IDE-specific 
+.vscode/ 
+*.code-workspace 
+
