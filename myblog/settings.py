@@ -16,7 +16,7 @@ from pathlib import Path
 # Adding advanced feature for to push git and github.
 
 from decouple import config
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = []
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-rsfv#3n$(m2ke-)#%cj_0s9d0bc4nk3@rx4lk&qx)f!wmc5%qg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -161,7 +161,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Adding the login_redirect_url setting
 LOGIN_REDIRECT_URL = '/'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
 
 
 
