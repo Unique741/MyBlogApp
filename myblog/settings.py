@@ -9,15 +9,8 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import os
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
-
+import os  # Add this at the top if not already present
 from pathlib import Path
-# Adding advanced feature for to push git and github.
-
-from decouple import config
-SECRET_KEY = config('SECRET_KEY')
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,12 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rsfv#3n$(m2ke-)#%cj_0s9d0bc4nk3@rx4lk&qx)f!wmc5%qg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+# Split by commas, e.g. "myblog-x-1.onrender.com,www.myblog.com"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")
 
 
 # Application definition
@@ -44,13 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog.apps.BlogConfig', # Add blog app
-    'crispy_forms', # Add crispy forms
-    'crispy_bootstrap5', # Add this line or add crispy bootstrap5
+    'blog.apps.BlogConfig',  # Add blog app
+    'crispy_forms',          # Add crispy forms
+    'crispy_bootstrap5',  # Add this line
     'ckeditor',
     'ckeditor_uploader',
 ]
-
 # Add crispy forms settings
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -68,11 +62,6 @@ CKEDITOR_CONFIGS = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Static files
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR / 'blog/static')]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -85,11 +74,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'myblog.urls'
 
-# Other settings (ensure these are present)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [], # Add project-wide templates if needed
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,10 +90,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'myblog.wsgi.application'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "blog/static"]
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'blog/static')]
+WSGI_APPLICATION = 'myblog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -158,11 +146,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Adding the login_redirect_url setting
-LOGIN_REDIRECT_URL = '/'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost, 127.0.0.1').split(',')
-
-
-
-
+# Add login redirect url
+LOGIN_REDIRECT_URL = '/' 
+# Or you can use this code both works properly.
+# LOGIN_REDIRECT_URL = 'post_list'
