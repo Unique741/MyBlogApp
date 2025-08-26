@@ -31,9 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")
 
 
-DEBUG = True
+DEBUG = False
 SECRET_KEY = ['SECRET_KEY']
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['myblogapp-02.onrender.com']
 
 # Application definition
 
