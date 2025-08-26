@@ -23,17 +23,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# Split by commas, e.g. "myblog-x-1.onrender.com,www.myblog.com"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+# # Split by commas, e.g. "myblog-x-1.onrender.com,www.myblog.com"
+# ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
-SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")
+# SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-secret-key")
 
 
-# DEBUG = True
-# SECRET_KEY = ['SECRET_KEY']
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+DEBUG = True
+SECRET_KEY = ['SECRET_KEY']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
